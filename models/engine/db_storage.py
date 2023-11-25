@@ -22,7 +22,7 @@ class DBStorage:
         db_passwd = getenv("HBNB_MYSQL_PWD")
         db_host = getenv("HBNB_MYSQL_HOST")
         db_name = getenv("HBNB_MYSQL_DB")
-        test = False if getenv("HBNB_ENV") == "test" else True
+        test = False if (getenv("HBNB_ENV") != "test") else True
 
         EStr = f"mysql+mysqldb://{db_user}:{db_passwd}@{db_host}/{db_name}"
         self.__engine = create_engine(EStr, pool_pre_ping=True)
@@ -39,18 +39,18 @@ class DBStorage:
 
     def all(self, cls=None):
         """doc"""
-        available_cls = [User, Place, State, City, Amenity, Review]
+        available_cls = [State, Place, User, City, Amenity, Review]
         content ={}
         if cls:
             for obj in self.__session.query(cls).all():
                 name = obj.__class__.__name__
-                key = "{}.{}".formart(name, obj.id)
+                key = "{}.{}".format(name, obj.id)
                 content[key] = obj
         else:
             for cls in available_cls:
                 for obj in self.__session.query(cls).all():
                     name = obj.__class__.__name__
-                    key = "{}.{}".formart(name, obj.id)
+                    key = "{}.{}".format(name, obj.id)
                     content[key] = obj
         return content
     
@@ -68,6 +68,7 @@ class DBStorage:
         """doc"""
         if obj:
             self.__session.delete(obj)
+        self.save()
 
     def close(self):
         """doc"""
