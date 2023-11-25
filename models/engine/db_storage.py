@@ -10,12 +10,12 @@ from models.review import Review
 from models.base_model import Base
 
 
-
 class DBStorage:
     """doc"""
 
     __engine = None
     __session = None
+
     def __init__(self):
         """doc"""
         db_user = getenv("HBNB_MYSQL_USER")
@@ -36,11 +36,10 @@ class DBStorage:
                 )
         self.__session = Session
 
-
     def all(self, cls=None):
         """doc"""
         available_cls = [State, Place, User, City, Amenity, Review]
-        content ={}
+        content = {}
         if cls:
             for obj in self.__session.query(cls).all():
                 name = obj.__class__.__name__
@@ -53,7 +52,7 @@ class DBStorage:
                     key = "{}.{}".format(name, obj.id)
                     content[key] = obj
         return content
-    
+
     def new(self, obj=None):
         """doc"""
         if obj:
@@ -62,7 +61,6 @@ class DBStorage:
     def save(self):
         """doc"""
         self.__session.commit()
-
 
     def delete(self, obj=None):
         """doc"""
@@ -73,5 +71,3 @@ class DBStorage:
     def close(self):
         """doc"""
         self.__session.remove()
-
-
