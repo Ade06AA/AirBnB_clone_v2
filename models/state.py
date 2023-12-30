@@ -19,9 +19,10 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """doc"""
+            from models import storage
             newl = []
             newd = storage.all(City)
             for i in newd.values():
                 if i.state_id == self.id:
-                    nnewl.append(i)
+                    newl.append(i)
             return newl
