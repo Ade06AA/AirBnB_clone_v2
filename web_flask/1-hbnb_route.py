@@ -11,7 +11,7 @@ app.url_map.strict_slashes = False
 
 
 @app.route("/")
-def home():
+def hello_hbnb():
     """
     doc
     """
@@ -19,7 +19,7 @@ def home():
 
 
 @app.route("/hbnb")
-def next():
+def hbnb():
     """
     doc
     """
