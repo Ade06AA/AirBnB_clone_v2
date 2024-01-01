@@ -28,12 +28,16 @@ def next6(Id=None):
     """
     doc
     """
-    storage = storage.all(State)
+    # if i use storage as a local variable instead of storage_
+    # it is going to asume the storage in storage.all(state) is also
+    # a local variable from the function even if it comes before the
+    # asignment of the new storage variable if i were to use the same name
+    storage_ = storage.all(State)
     # when function sorted is called on a dict it only consider the
     # keys of the dict and return only a list of the sorted key
-    sorted_key = sorted(storage, key=lambda x: storage[x].name)
-    storage = {k: storage[k] for k in sorted_key}
-    return render_template("9-states.html", storage=storage, Id=Id)
+    sorted_key = sorted(storage_, key=lambda x: storage_[x].name)
+    storage_ = {k: storage_[k] for k in sorted_key}
+    return render_template("9-states.html", storage=storage_, Id=Id)
 
 
 if __name__ == "__main__":

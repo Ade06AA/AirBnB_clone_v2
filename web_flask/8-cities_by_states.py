@@ -27,7 +27,7 @@ def next6():
     doc
     """
     st = storage.all(State).values()
-    st = sorted(storage, key=lambda x: x.name)
+    st = sorted(st, key=lambda x: x.name)
     return render_template("8-cities_by_states.html", storage=st)
 
 
