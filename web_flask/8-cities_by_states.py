@@ -21,7 +21,7 @@ def after_every_request7(f):
     storage.close()
 
 
-@app.route("/states_list")
+@app.route("/cities_by_states")
 def next6():
     """
     doc
