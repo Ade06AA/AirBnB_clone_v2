@@ -5,13 +5,14 @@ module doc
 
 from flask import Flask, render_template
 from sys import path
-path.append('..')
+# path.append('..')
 from models import storage
 from models.state import State
 
 app = Flask(__name__)
 
 app.url_map.strict_slashes = False
+
 
 @app.teardown_appcontext
 def after_every_request7(f):
@@ -20,15 +21,20 @@ def after_every_request7(f):
     """
     storage.close()
 
+
 @app.route("/states_list")
 @app.route("/states_list/<Id>")
 def next6(Id=None):
     """
     doc
     """
-    st = storage.all(State)
-    print(st["State.421a55f4-7d82-47d9-b54c-a76916479545"])
-    return render_template("9-states.html", storage=st, Id=Id)
+    storage = storage.all(State)
+    # when function sorted is called on a dict it only consider the
+    # keys of the dict and return only a list of the sorted key
+    sorted_key = sorted(storage, key=lambda x: storage[x].name)
+    storage = {k: storage[k] for k in sorted_key}
+    return render_template("9-states.html", storage=storage, Id=Id)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

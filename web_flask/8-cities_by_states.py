@@ -5,7 +5,6 @@ module doc
 
 from flask import Flask, render_template
 from sys import path
-path.append('..')
 from models import storage
 from models.state import State
 
@@ -27,7 +26,8 @@ def next6():
     """
     doc
     """
-    st = storage.all(State)
+    st = storage.all(State).values()
+    st = sorted(storage, key=lambda x: x.name)
     return render_template("8-cities_by_states.html", storage=st)
 
 

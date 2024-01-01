@@ -25,7 +25,9 @@ def next6():
     """
     doc
     """
-    return render_template("7-states_list.html", storage=storage.all(State))
+    storage = storage.all(State).values()
+    storage = sorted(storage, key=lambda x: x.name)
+    return render_template("7-states_list.html", storage=storage)
 
 
 if __name__ == "__main__":
